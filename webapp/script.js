@@ -219,16 +219,7 @@ function typeText(element, text, duration) {
   }, intervalTime);
 }
 
-// ===== Режим Лотерея (честная, бесконечная) =====
-const lotteryPrizes = [
-  "Бесконечные объятия",
-  "Пожизненный запас комплиментов",
-  "Звание 'Самая лучшая'",
-  "Сюрприз 🎁",
-  "Подарок 🍫",
-  "Обнимашки 🤗"
-];
-
+// ===== Режим Лотерея (честная, бесконечная, без 5-секундной блокировки) =====
 lotteryBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
@@ -258,7 +249,6 @@ lotteryBtn.addEventListener("click", () => {
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
 
-  // Создаем сегменты колеса
   wheel.innerHTML = "";
   lotteryPrizes.forEach((text, i) => {
     const seg = document.createElement("div");
@@ -270,30 +260,19 @@ lotteryBtn.addEventListener("click", () => {
 
   createFlowers(30, flowersContainer);
 
-  spinBtn.addEventListener("click", () => {
-    spinBtn.disabled = true;
+  // Показываем кнопку "Назад" сразу
+  backBtn.classList.add("show");
 
-    const rotations = 5; 
-    const prizeIndex = Math.floor(Math.random() * lotteryPrizes.length); // честная лотерея
+  spinBtn.addEventListener("click", () => {
+    const rotations = 5;
+    const prizeIndex = Math.floor(Math.random() * lotteryPrizes.length);
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
 
     wheel.style.transform = `rotate(${finalAngle}deg)`;
 
     setTimeout(() => {
-      // Показываем приз
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
-
-      // Появление кнопки "Назад" под текстом
-      backBtn.style.top = (prizeEl.offsetTop + prizeEl.offsetHeight + 20) + "px";
-      backBtn.style.left = "50%";
-      backBtn.style.transform = "translateX(-50%)";
-      backBtn.classList.add("show");
-
-      // Разблокируем кнопку для следующего вращения через 5 секунд
-      setTimeout(() => {
-        spinBtn.disabled = false;
-      }, 5000);
     }, 4000);
   });
 
