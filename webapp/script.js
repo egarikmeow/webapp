@@ -334,6 +334,7 @@ feelingsBtn.addEventListener("click", () => {
   fromMeContainer.innerHTML = "";
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
   document.querySelectorAll(".info-mode").forEach(el => el.remove());
+  document.querySelectorAll(".feelings-mode").forEach(el => el.remove());
 
   const container = document.createElement("div");
   container.classList.add("feelings-mode");
@@ -384,14 +385,6 @@ feelingsBtn.addEventListener("click", () => {
       display.textContent = input;
     });
   });
-
-  // обработка кнопки "Назад"
-  backBtn.onclick = () => {
-    container.remove();
-    backBtn.classList.remove("show");
-    intro.style.display = "block";
-    showMenuWithAnimation();
-  };
 });
 
 // ===== Режим Викторина =====
