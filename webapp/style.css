@@ -540,7 +540,7 @@ body {
   background: #999;
 }
 
-/* ===== Режим "Секретный" ===== */
+/* ===== Режим "Секрет" ===== */
 .secret-mode {
   position: fixed;
   top:0;

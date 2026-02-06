@@ -388,7 +388,7 @@ feelingsBtn.addEventListener("click", () => {
   });
 });
 
-// ===== Кнопка Секретный режим =====
+// ===== Кнопка Секрет режим =====
 const secretBtn = document.createElement("button");
 secretBtn.classList.add("mode-btn");
 secretBtn.textContent = "Секрет ✨";
@@ -406,7 +406,7 @@ secretBtn.addEventListener("click", () => {
   document.querySelectorAll(".info-mode").forEach(el => el.remove());
   document.querySelectorAll(".feelings-mode").forEach(el => el.remove());
 
-  // ===== Создаем разметку секретного режима =====
+  // ===== Создаем разметку секрет режима =====
   const container = document.createElement("div");
   container.classList.add("secret-mode");
   container.innerHTML = `
