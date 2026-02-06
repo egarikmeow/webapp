@@ -73,9 +73,10 @@ body {
   width: 140px;
   text-align: center;
 
-  opacity: 0;             /* изначально скрыты */
-  transform: translateY(20px);  /* смещены вниз */
-  transition: all 0.5s ease;   /* плавная анимация */
+  opacity: 0;             
+  transform: translateY(20px);  
+  transition: all 0.5s ease;   
+  will-change: transform, opacity; 
 }
 
 .mode-btn:active {
@@ -83,8 +84,8 @@ body {
 }
 
 .mode-btn.show {
-  opacity: 1;            /* становятся видимыми */
-  transform: translateY(0);  /* поднимаются на место */
+  opacity: 1;            
+  transform: translateY(0);  
 }
 
 .back-btn {
@@ -230,13 +231,28 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   -webkit-text-stroke: 0.2px black;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  will-change: transform, opacity;
 }
 .quiz-option.correct {
   background: #4caf50 !important;
 }
+.quiz-option.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 #next-quiz-btn {
   margin-top: 16px;
-  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+#next-quiz-btn.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 #roses-container {
   position: absolute;

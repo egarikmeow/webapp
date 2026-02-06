@@ -3,7 +3,7 @@ tg.expand();
 
 const intro = document.getElementById("intro");
 const menu = document.getElementById("menu");
-const introText = document.querySelector(".intro-text"); // добавил для "Привет, выбирай"
+const introText = document.querySelector(".intro-text");
 const loveBtn = document.getElementById("love-btn");
 const quizBtn = document.getElementById("quiz-btn");
 const fromMeBtn = document.getElementById("from-me-btn");
@@ -44,15 +44,11 @@ backBtn.textContent = "⬅ Назад";
 document.body.appendChild(backBtn);
 
 backBtn.addEventListener("click", () => {
-  // Скрываем все режимы
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
-
-  // Показываем меню и "Привет, выбирай"
-  intro.style.display = "block"; // текст интро видим
+  intro.style.display = "block";
   showMenuWithAnimation();
-
   backBtn.classList.remove("show");
 });
 
@@ -76,6 +72,8 @@ loveBtn.addEventListener("click", () => {
   const lovePhrase = document.getElementById("love-phrase");
   const nextBtn = document.getElementById("next-btn");
   const heartsContainer = document.getElementById("hearts-container");
+
+  setTimeout(() => nextBtn.classList.add("show"), 200); // плавное появление кнопки "Ещё"
 
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
@@ -119,7 +117,7 @@ fromMeBtn.addEventListener("click", () => {
   `;
 
   const textEl = document.getElementById("from-me-text");
-  typeText(textEl, fromMeTextContent, 30000); // печатаем 30 секунд
+  typeText(textEl, fromMeTextContent, 30000);
 });
 
 function typeText(element, text, duration) {
@@ -170,7 +168,7 @@ quizBtn.addEventListener("click", () => {
   const rosesContainer = document.getElementById("roses-container");
 
   quizIndex = 0;
-  nextBtn.style.display = "none";
+  nextBtn.classList.remove("show");
   showQuestion();
 
   nextBtn.addEventListener("click", () => {
@@ -179,7 +177,7 @@ quizBtn.addEventListener("click", () => {
       showFinalText();
     } else {
       showQuestion();
-      nextBtn.style.display = "none";
+      nextBtn.classList.remove("show");
     }
   });
 
@@ -198,10 +196,12 @@ quizBtn.addEventListener("click", () => {
       questionEl.style.opacity = 1;
     }, 50);
 
-    q.opts.forEach(opt => {
+    q.opts.forEach((opt, i) => {
       const btn = document.createElement("button");
       btn.textContent = opt;
       btn.classList.add("quiz-option");
+
+      setTimeout(() => btn.classList.add("show"), i * 150); // плавное появление кнопок
 
       btn.addEventListener("click", () => {
         const praise = praises[Math.floor(Math.random() * praises.length)];
@@ -221,7 +221,7 @@ quizBtn.addEventListener("click", () => {
         }, 300);
 
         btn.classList.add("correct");
-        nextBtn.style.display = "block";
+        setTimeout(() => nextBtn.classList.add("show"), 50); // плавно показать кнопку "Дальше"
       });
 
       optionsEl.appendChild(btn);
