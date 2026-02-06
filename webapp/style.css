@@ -309,7 +309,7 @@ body {
   left:0;
   width:100%;
   height:100%;
-  background:#fff0f5;
+  background:#ff9c3b; /* ярко-оранжевый фон */
   display:flex;
   flex-direction:column;
   align-items:center;

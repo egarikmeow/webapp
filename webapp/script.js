@@ -150,10 +150,7 @@ lotteryBtn.addEventListener("click", () => {
   intro.style.display = "none";
   backBtn.classList.add("show");
 
-  const segmentCount = lotteryPrizes.length;
-  const angleStep = 360 / segmentCount;
-
-  loveContainer.innerHTML = ""; // очищаем предыдущие режимы
+  loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
 
@@ -176,6 +173,8 @@ lotteryBtn.addEventListener("click", () => {
   const prizeEl = document.getElementById("lottery-prize");
 
   // создаем сегменты
+  const segmentCount = lotteryPrizes.length;
+  const angleStep = 360 / segmentCount;
   lotteryPrizes.forEach((text, i) => {
     const seg = document.createElement("div");
     seg.classList.add("segment");
@@ -184,13 +183,15 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
-  setTimeout(() => spinBtn.classList.add("show"), 200); // плавное появление кнопки
+  // плавное появление кнопки
+  setTimeout(() => spinBtn.classList.add("show"), 200);
 
+  // привязка клика к кнопке
   spinBtn.addEventListener("click", () => {
     spinBtn.disabled = true;
 
-    const rotations = 5; // количество оборотов
-    const prizeIndex = 0; // гарантированный выигрыш
+    const rotations = 5; // обороты
+    const prizeIndex = 0; // всегда выигрыш
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
 
     wheel.style.transform = `rotate(${finalAngle}deg)`;
@@ -198,7 +199,7 @@ lotteryBtn.addEventListener("click", () => {
     setTimeout(() => {
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
-    }, 4000); // совпадает с длительностью анимации
+    }, 4000);
   });
 });
 
