@@ -159,6 +159,7 @@ lotteryBtn.addEventListener("click", () => {
 
   container.innerHTML = `
     <div class="lottery-title">Лотерея 🎫</div>
+    <div id="flowers-container"></div>
     <div class="wheel-container">
       <div class="wheel" id="wheel"></div>
     </div>
@@ -171,7 +172,9 @@ lotteryBtn.addEventListener("click", () => {
   const wheel = document.getElementById("wheel");
   const spinBtn = document.getElementById("spin-btn");
   const prizeEl = document.getElementById("lottery-prize");
+  const flowersContainer = document.getElementById("flowers-container");
 
+  // ===== Сегменты колеса =====
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
 
@@ -183,19 +186,51 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
+  // ===== Плавное появление кнопки "Крутить" =====
   setTimeout(() => spinBtn.classList.add("show"), 200);
 
   spinBtn.addEventListener("click", () => {
     spinBtn.disabled = true;
-    const rotations = 5;
+
+    const rotations = 5; // количество оборотов
     const prizeIndex = 0; // всегда выигрыш
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
+
     wheel.style.transform = `rotate(${finalAngle}deg)`;
 
     setTimeout(() => {
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
     }, 4000);
+  });
+
+  // ===== Падающие цветы =====
+  createFlowers(30, flowersContainer);
+
+  function createFlowers(count, container) {
+    for (let i = 0; i < count; i++) addFlower(container);
+    setInterval(() => addFlower(container), 600);
+  }
+
+  function addFlower(container) {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.textContent = "🏵️";
+    flower.style.left = Math.random() * 100 + "%";
+    flower.style.fontSize = 14 + Math.random() * 14 + "px";
+    flower.style.animationDuration = 3 + Math.random() * 2 + "s";
+    flower.style.opacity = 0.5 + Math.random() * 0.5;
+    container.appendChild(flower);
+    setTimeout(() => container.removeChild(flower), 5000);
+  }
+
+  // ===== Кнопка "Назад" для лотереи =====
+  backBtn.addEventListener("click", function backLottery() {
+    container.remove();
+    backBtn.classList.remove("show");
+    intro.style.display = "block";
+    showMenuWithAnimation();
+    backBtn.removeEventListener("click", backLottery);
   });
 });
 
