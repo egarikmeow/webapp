@@ -219,7 +219,7 @@ function typeText(element, text, duration) {
   }, intervalTime);
 }
 
-// ===== Режим Лотерея (честная) =====
+// ===== Режим Лотерея (честная, бесконечная) =====
 const lotteryPrizes = [
   "Бесконечные объятия",
   "Пожизненный запас комплиментов",
@@ -258,6 +258,8 @@ lotteryBtn.addEventListener("click", () => {
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
 
+  // Создаем сегменты колеса
+  wheel.innerHTML = "";
   lotteryPrizes.forEach((text, i) => {
     const seg = document.createElement("div");
     seg.classList.add("segment");
@@ -266,7 +268,7 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
-  setTimeout(() => spinBtn.classList.add("show"), 200);
+  createFlowers(30, flowersContainer);
 
   spinBtn.addEventListener("click", () => {
     spinBtn.disabled = true;
@@ -278,6 +280,7 @@ lotteryBtn.addEventListener("click", () => {
     wheel.style.transform = `rotate(${finalAngle}deg)`;
 
     setTimeout(() => {
+      // Показываем приз
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
 
@@ -286,10 +289,13 @@ lotteryBtn.addEventListener("click", () => {
       backBtn.style.left = "50%";
       backBtn.style.transform = "translateX(-50%)";
       backBtn.classList.add("show");
+
+      // Разблокируем кнопку для следующего вращения через 5 секунд
+      setTimeout(() => {
+        spinBtn.disabled = false;
+      }, 5000);
     }, 4000);
   });
-
-  createFlowers(30, flowersContainer);
 
   function createFlowers(count, container) {
     for (let i = 0; i < count; i++) addFlower(container);
