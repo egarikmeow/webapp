@@ -504,9 +504,9 @@ luckBtnMenu.addEventListener("click", () => {
   const container = document.createElement("div");
   container.classList.add("luck-mode");
   container.innerHTML = `
-    <div class="luck-title">Вот, что я люблю в тебе:</div>
+    <div class="luck-title">Вот, что мне нравится в тебе:</div>
     <div class="luck-text" id="luck-text"></div>
-    <button class="luck-btn" id="why-btn">Почему?</button>
+    <button class="luck-btn" id="why-btn">Что?</button>
   `;
   loveContainer.appendChild(container);
 
@@ -517,18 +517,10 @@ luckBtnMenu.addEventListener("click", () => {
 
   whyBtn.addEventListener("click", () => {
     const randomQuality = herQualities[Math.floor(Math.random() * herQualities.length)];
-
-    // сбрасываем анимацию
+    luckText.textContent = randomQuality;
     luckText.classList.remove("show");
-    luckText.style.opacity = 0;
-    luckText.style.filter = "blur(6px)";
-    luckText.style.transform = "translateY(20px)";
-
-    // через 50мс добавляем текст и запускаем анимацию
-    setTimeout(() => {
-      luckText.textContent = randomQuality;
-      luckText.classList.add("show");
-    }, 50);
+    void luckText.offsetWidth; // сброс анимации
+    luckText.classList.add("show");
   });
 });
 
