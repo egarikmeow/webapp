@@ -3,11 +3,10 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message, WebAppInfo
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram.client.bot import DefaultBotProperties  # <- важно
+from aiogram.client.bot import DefaultBotProperties
 
 TOKEN = "8241511485:AAFNHhwuT0taRuvTFNaql5YPksC0G6hOgvM"
 
-# Используем DefaultBotProperties для parse_mode
 bot = Bot(
     token=TOKEN,
     default=DefaultBotProperties(parse_mode="HTML")
@@ -19,7 +18,7 @@ async def start(message: Message):
     kb = InlineKeyboardBuilder()
     kb.button(
         text="💖 Нажми сюда",
-        web_app=WebAppInfo(url="https://egarikmeow.github.io/webapp/webapp/?v=18")
+        web_app=WebAppInfo(url="https://egarikmeow.github.io/webapp/webapp/?v=19")
     )
 
     await message.answer(
@@ -33,11 +32,7 @@ async def info(message: Message):
         "<i><b>‼️ Информация:</b></i>\n\n"
         "<b>❤️ Самую главную информацию ты увидишь в мини-аппе (/start) - там всё подробно. "
         "Здесь лишь расскажу, что я вложил всю душу сюда, самую малую часть идей (иначе было бы слишком много), "
-        "выжал максимум своих сил. Оч надеюсь, что тебе это все понравится.</b>\n\n"
-        "‼️‼️‼️ Дальше некоторые спойлеры, не читай, если не хочешь спойлеров!\n\n"
-        "<tg-spoiler>Баг, который невозможно исправить (я пытался): кнопка \"назад\" в лотереи не отображается, "
-        "так что либо перезагрузи страницу, либо тыкни туда, где она была в режиме \"причины\" или \"викторина\" "
-        "(она там есть, но не отображается, кликабельна!)</tg-spoiler>"
+        "выжал максимум своих сил. Оч надеюсь, что тебе это все понравится! :3</b>"
     )
     await message.answer(text)
 
