@@ -5,9 +5,9 @@ const intro = document.getElementById("intro");
 const menu = document.getElementById("menu");
 const loveBtn = document.getElementById("love-btn");
 const quizBtn = document.getElementById("quiz-btn");
+const fromMeBtn = document.getElementById("from-me-btn");
 const loveContainer = document.getElementById("love-mode-container");
 const quizContainer = document.getElementById("quiz-mode-container");
-const fromMeBtn = document.getElementById("from-me-btn");
 const fromMeContainer = document.getElementById("from-me-container");
 
 // ===== Режим "Почему я тебя люблю" =====
@@ -24,13 +24,44 @@ let loveIndex = 0;
 setTimeout(() => intro.classList.add("show"), 300);
 setTimeout(() => {
   intro.classList.add("hide");
-  menu.classList.remove("hidden");
+
+  // Показываем меню
+  menu.classList.add("show");
+
+  // Плавное появление кнопок по очереди (по 2 в ряд, с задержкой)
+  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+  buttons.forEach((btn, i) => {
+    setTimeout(() => btn.classList.add("show"), i * 150);
+  });
+
 }, 1800);
+
+// ===== Кнопка "Назад" =====
+const backBtn = document.createElement("button");
+backBtn.classList.add("back-btn");
+backBtn.textContent = "⬅ Назад";
+document.body.appendChild(backBtn);
+
+backBtn.addEventListener("click", () => {
+  // Скрываем все режимы
+  loveContainer.innerHTML = "";
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+
+  // Показываем меню
+  menu.classList.add("show");
+  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+  buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
+
+  // Скрываем кнопку назад
+  backBtn.classList.remove("show");
+});
 
 // ===== Почему я тебя люблю =====
 loveBtn.addEventListener("click", () => {
-  menu.classList.add("hidden");
+  menu.classList.remove("show");
   intro.style.display = "none";
+  backBtn.classList.add("show");
 
   loveContainer.innerHTML = `
     <div class="love-mode">
@@ -78,8 +109,9 @@ function addHeart(container) {
 const fromMeTextContent = `Яночка, сегодня 14 февраля, день всех влюбленных, и в этот день я хочу тебе сказать, что я тебя очень сильно люблю и обожаю, ты лучшее что случилось со мной в 2026 году, и я очень рад, что сейчас мы вместе, и хочу, что бы это так было всегда 💘`;
 
 fromMeBtn.addEventListener("click", () => {
-  menu.classList.add("hidden");
+  menu.classList.remove("show");
   intro.style.display = "none";
+  backBtn.classList.add("show");
 
   fromMeContainer.innerHTML = `
     <div class="from-me-mode">
@@ -118,8 +150,9 @@ const praises = ["Да!","Верно)","Я также ответил","Имен�
 let quizIndex = 0;
 
 quizBtn.addEventListener("click", () => {
-  menu.classList.add("hidden");
+  menu.classList.remove("show");
   intro.style.display = "none";
+  backBtn.classList.add("show");
 
   quizContainer.innerHTML = `
     <div class="quiz-mode">
