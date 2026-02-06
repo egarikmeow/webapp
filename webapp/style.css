@@ -43,6 +43,7 @@ body {
   font-size: 28px;
   color: #000;
   text-align: center;
+  display: block;
 }
 .intro.hide {
   transform: translate(-50%, -30%);
@@ -53,7 +54,7 @@ body {
   bottom: 25%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* 2 кнопки в ряд */
   gap: 16px;
   justify-items: center;
   align-items: center;
@@ -79,7 +80,7 @@ body {
 }
 
 .mode-btn {
-  background: rgba(160,160,160,0.6);
+  background: rgba(160,160,160,0.75); /* чуть темнее */
   backdrop-filter: blur(12px);
   color: white;
   font-family: 'Farabee', cursive;
@@ -109,7 +110,7 @@ body {
   top: 16px;
   left: 16px;
   padding: 10px 14px;
-  background: rgba(160,160,160,0.6);
+  background: rgba(160,160,160,0.75);
   backdrop-filter: blur(12px);
   color: white;
   font-family: 'Farabee', cursive;
@@ -276,6 +277,7 @@ body {
   0% { transform: translateY(-20px) rotate(0deg); }
   100% { transform: translateY(110vh) rotate(360deg); }
 }
+
 /* ===== Режим "От меня" ===== */
 .from-me-mode {
   position: fixed;
@@ -299,6 +301,7 @@ body {
   opacity: 0;
   white-space: pre-wrap; /* сохраняем переносы */
   line-height: 1.5;
+  color: #000; /* для всех устройств */
 }
 
 /* ===== Финальный текст ===== */
@@ -313,6 +316,7 @@ body {
   opacity:0;
   filter: blur(8px);
   animation: finalAppear 1s forwards;
+  color: #000;
 }
 @keyframes finalAppear {
   0% { opacity:0; filter: blur(8px); transform:translate(-50%, 40px);}
