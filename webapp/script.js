@@ -517,10 +517,18 @@ luckBtnMenu.addEventListener("click", () => {
 
   whyBtn.addEventListener("click", () => {
     const randomQuality = herQualities[Math.floor(Math.random() * herQualities.length)];
-    luckText.textContent = randomQuality;
+
+    // сбрасываем анимацию
     luckText.classList.remove("show");
-    void luckText.offsetWidth; // сброс анимации
-    luckText.classList.add("show");
+    luckText.style.opacity = 0;
+    luckText.style.filter = "blur(6px)";
+    luckText.style.transform = "translateY(20px)";
+
+    // через 50мс добавляем текст и запускаем анимацию
+    setTimeout(() => {
+      luckText.textContent = randomQuality;
+      luckText.classList.add("show");
+    }, 50);
   });
 });
 
