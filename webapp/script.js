@@ -24,16 +24,7 @@ let loveIndex = 0;
 setTimeout(() => intro.classList.add("show"), 300);
 setTimeout(() => {
   intro.classList.add("hide");
-
-  // Показываем меню
-  menu.classList.add("show");
-
-  // Плавное появление кнопок по очереди
-  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-  buttons.forEach((btn, i) => {
-    setTimeout(() => btn.classList.add("show"), i * 150); // задержка между кнопками
-  });
-
+  menu.classList.remove("hidden");
 }, 1800);
 
 // ===== Почему я тебя люблю =====
