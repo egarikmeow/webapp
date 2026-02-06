@@ -45,10 +45,15 @@ backBtn.textContent = "⬅ Назад";
 document.body.appendChild(backBtn);
 
 backBtn.addEventListener("click", () => {
+  // Убираем все режимы
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
+
+  // Если есть лотерея — удаляем
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
+
+  // Показываем меню и intro
   intro.style.display = "block";
   showMenuWithAnimation();
   backBtn.classList.remove("show");
@@ -223,15 +228,6 @@ lotteryBtn.addEventListener("click", () => {
     container.appendChild(flower);
     setTimeout(() => container.removeChild(flower), 5000);
   }
-
-  // ===== Кнопка "Назад" для лотереи =====
-  backBtn.addEventListener("click", function backLottery() {
-    container.remove();
-    backBtn.classList.remove("show");
-    intro.style.display = "block";
-    showMenuWithAnimation();
-    backBtn.removeEventListener("click", backLottery);
-  });
 });
 
 // ===== Режим Викторина =====
