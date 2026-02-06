@@ -10,6 +10,43 @@ const loveContainer = document.getElementById("love-mode-container");
 const quizContainer = document.getElementById("quiz-mode-container");
 const fromMeContainer = document.getElementById("from-me-container");
 
+// ===== Стартовый экран =====
+function showMenu() {
+  intro.classList.add("hide");
+  menu.classList.add("show");
+  menu.querySelector(".intro-text").style.display = "block";
+
+  // Плавное появление кнопок по 2 в ряд
+  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+  buttons.forEach((btn, i) => {
+    setTimeout(() => btn.classList.add("show"), i * 150);
+  });
+}
+setTimeout(() => intro.classList.add("show"), 300);
+setTimeout(showMenu, 1800);
+
+// ===== Кнопка "Назад" =====
+const backBtn = document.createElement("button");
+backBtn.classList.add("back-btn");
+backBtn.textContent = "⬅ Назад";
+document.body.appendChild(backBtn);
+
+backBtn.addEventListener("click", () => {
+  loveContainer.innerHTML = "";
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+
+  menu.classList.add("show");
+  menu.querySelector(".intro-text").style.display = "block";
+
+  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+  buttons.forEach((btn, i) => {
+    setTimeout(() => btn.classList.add("show"), i * 150);
+  });
+
+  backBtn.classList.remove("show");
+});
+
 // ===== Режим "Почему я тебя люблю" =====
 const lovePhrases = [
   "Ты делаешь мой мир светлее ✨",
@@ -20,46 +57,6 @@ const lovePhrases = [
 ];
 let loveIndex = 0;
 
-// ===== Стартовый экран =====
-function showIntroAndMenu() {
-  intro.classList.add("show");
-  setTimeout(() => {
-    intro.classList.add("hide");
-
-    // Показываем меню и текст "Привет, выбирай"
-    menu.classList.add("show");
-    menu.querySelector(".intro-text").style.display = "block";
-
-    // Плавное появление кнопок по очереди
-    const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-    buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
-  }, 1500);
-}
-setTimeout(showIntroAndMenu, 300);
-
-// ===== Кнопка "Назад" =====
-const backBtn = document.createElement("button");
-backBtn.classList.add("back-btn");
-backBtn.textContent = "⬅ Назад";
-document.body.appendChild(backBtn);
-
-backBtn.addEventListener("click", () => {
-  // Скрываем все режимы
-  loveContainer.innerHTML = "";
-  quizContainer.innerHTML = "";
-  fromMeContainer.innerHTML = "";
-
-  // Показываем главное меню
-  menu.classList.add("show");
-  menu.querySelector(".intro-text").style.display = "block";
-
-  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-  buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
-
-  backBtn.classList.remove("show");
-});
-
-// ===== Почему я тебя люблю =====
 loveBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
@@ -80,7 +77,6 @@ loveBtn.addEventListener("click", () => {
   const nextBtn = document.getElementById("next-btn");
   const heartsContainer = document.getElementById("hearts-container");
 
-  // Кнопка Ещё всегда работает
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
     lovePhrase.textContent = lovePhrases[loveIndex];
@@ -91,22 +87,6 @@ loveBtn.addEventListener("click", () => {
 
   createHearts(30, heartsContainer);
 });
-
-function createHearts(count, container) {
-  for (let i = 0; i < count; i++) addHeart(container);
-  setInterval(() => addHeart(container), 500);
-}
-function addHeart(container) {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.textContent = "❤️";
-  heart.style.left = Math.random() * 100 + "%";
-  heart.style.fontSize = 14 + Math.random() * 14 + "px";
-  heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-  heart.style.opacity = 0.5 + Math.random() * 0.5;
-  container.appendChild(heart);
-  setTimeout(() => container.removeChild(heart), 5000);
-}
 
 // ===== Режим "От меня" =====
 const fromMeTextContent = `Яночка, сегодня 14 февраля, день всех влюбленных, и в этот день я хочу тебе сказать, что я тебя очень сильно люблю и обожаю, ты лучшее что случилось со мной в 2026 году, и я очень рад, что сейчас мы вместе, и хочу, что бы это так было всегда 💘`;
@@ -225,7 +205,7 @@ quizBtn.addEventListener("click", () => {
         }, 300);
 
         btn.classList.add("correct");
-        nextBtn.style.display = "block"; // кнопка Дальше снова видна
+        nextBtn.style.display = "block";
       });
 
       optionsEl.appendChild(btn);
