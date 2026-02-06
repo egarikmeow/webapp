@@ -12,6 +12,16 @@ const loveContainer = document.getElementById("love-mode-container");
 const quizContainer = document.getElementById("quiz-mode-container");
 const fromMeContainer = document.getElementById("from-me-container");
 
+// ===== Режим "Почему я тебя люблю" =====
+const lovePhrases = [
+  "Ты делаешь мой мир светлее ✨",
+  "С тобой каждый день — праздник 🎉",
+  "Твоя улыбка — моя радость 😊",
+  "Ты самый дорогой человек для меня 💖",
+  "Каждый момент с тобой бесценен 🌸"
+];
+let loveIndex = 0;
+
 // ===== Стартовый экран =====
 function showMenuWithAnimation() {
   menu.classList.add("show");
@@ -35,27 +45,20 @@ backBtn.textContent = "⬅ Назад";
 document.body.appendChild(backBtn);
 
 backBtn.addEventListener("click", () => {
+  // Убираем все режимы
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
   document.querySelectorAll(".info-mode").forEach(el => el.remove());
 
+  // Показываем меню и intro
   intro.style.display = "block";
   showMenuWithAnimation();
   backBtn.classList.remove("show");
 });
 
 // ===== Почему я тебя люблю =====
-const lovePhrases = [
-  "Ты делаешь мой мир светлее ✨",
-  "С тобой каждый день — праздник 🎉",
-  "Твоя улыбка — моя радость 😊",
-  "Ты самый дорогой человек для меня 💖",
-  "Каждый момент с тобой бесценен 🌸"
-];
-let loveIndex = 0;
-
 loveBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
@@ -128,7 +131,7 @@ infoBtn.addEventListener("click", () => {
     <div class="info-glass">
       <div class="info-text" id="info-text"></div>
     </div>
-    <button class="mode-btn" id="info-next-btn">Дальше ➡️</button>
+    <button class="mode-btn" id="info-next-btn" style="display:none;">Дальше ➡️</button>
   `;
   document.body.appendChild(container);
 
@@ -161,7 +164,7 @@ infoBtn.addEventListener("click", () => {
   }
 
   typeLine(infoLines[currentLine], () => {
-    nextBtn.style.display = "inline-block";
+    nextBtn.style.display = "block";
   });
 
   nextBtn.addEventListener("click", () => {
@@ -171,9 +174,9 @@ infoBtn.addEventListener("click", () => {
       typeLine(infoLines[currentLine], () => {
         if (currentLine === infoLines.length - 1) {
           nextBtn.textContent = "Это всё ✅";
-          nextBtn.style.display = "inline-block";
+          nextBtn.style.display = "block";
         } else {
-          nextBtn.style.display = "inline-block";
+          nextBtn.style.display = "block";
         }
       });
     } else {
@@ -216,20 +219,19 @@ function typeText(element, text, duration) {
   }, intervalTime);
 }
 
-// ===== Режим Лотерея =====
+// ===== Режим Лотерея (честная) =====
 const lotteryPrizes = [
   "Бесконечные объятия",
   "Пожизненный запас комплиментов",
   "Звание 'Самая лучшая'",
-  "Бесконечные объятия",
-  "Пожизненный запас комплиментов",
-  "Звание 'Самая лучшая'"
+  "Сюрприз 🎁",
+  "Подарок 🍫",
+  "Обнимашки 🤗"
 ];
 
 lotteryBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
-  backBtn.classList.add("show");
 
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
@@ -237,7 +239,6 @@ lotteryBtn.addEventListener("click", () => {
 
   const container = document.createElement("div");
   container.classList.add("lottery-mode");
-
   container.innerHTML = `
     <div class="lottery-title">Лотерея 🎫</div>
     <div id="flowers-container"></div>
@@ -247,7 +248,6 @@ lotteryBtn.addEventListener("click", () => {
     <button class="spin-btn" id="spin-btn">Крутить 🎡</button>
     <div class="lottery-prize" id="lottery-prize"></div>
   `;
-
   document.body.appendChild(container);
 
   const wheel = document.getElementById("wheel");
@@ -255,7 +255,6 @@ lotteryBtn.addEventListener("click", () => {
   const prizeEl = document.getElementById("lottery-prize");
   const flowersContainer = document.getElementById("flowers-container");
 
-  // ===== Сегменты колеса =====
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
 
@@ -267,14 +266,13 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
-  // ===== Плавное появление кнопки "Крутить" =====
   setTimeout(() => spinBtn.classList.add("show"), 200);
 
   spinBtn.addEventListener("click", () => {
     spinBtn.disabled = true;
 
-    const rotations = 5; // количество оборотов
-    const prizeIndex = 0; // всегда выигрыш
+    const rotations = 5; 
+    const prizeIndex = Math.floor(Math.random() * lotteryPrizes.length); // честная лотерея
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
 
     wheel.style.transform = `rotate(${finalAngle}deg)`;
@@ -282,17 +280,21 @@ lotteryBtn.addEventListener("click", () => {
     setTimeout(() => {
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
+
+      // Появление кнопки "Назад" под текстом
+      backBtn.style.top = (prizeEl.offsetTop + prizeEl.offsetHeight + 20) + "px";
+      backBtn.style.left = "50%";
+      backBtn.style.transform = "translateX(-50%)";
+      backBtn.classList.add("show");
     }, 4000);
   });
 
-  // ===== Падающие цветы =====
   createFlowers(30, flowersContainer);
 
   function createFlowers(count, container) {
     for (let i = 0; i < count; i++) addFlower(container);
     setInterval(() => addFlower(container), 600);
   }
-
   function addFlower(container) {
     const flower = document.createElement("div");
     flower.classList.add("flower");
