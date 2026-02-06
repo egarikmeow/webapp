@@ -21,20 +21,21 @@ const lovePhrases = [
 let loveIndex = 0;
 
 // ===== Стартовый экран =====
-setTimeout(() => intro.classList.add("show"), 300);
-setTimeout(() => {
-  intro.classList.add("hide");
+function showIntroAndMenu() {
+  intro.classList.add("show");
+  setTimeout(() => {
+    intro.classList.add("hide");
 
-  // Показываем меню
-  menu.classList.add("show");
+    // Показываем меню и текст "Привет, выбирай"
+    menu.classList.add("show");
+    menu.querySelector(".intro-text").style.display = "block";
 
-  // Плавное появление кнопок по очереди (по 2 в ряд, с задержкой)
-  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-  buttons.forEach((btn, i) => {
-    setTimeout(() => btn.classList.add("show"), i * 150);
-  });
-
-}, 1800);
+    // Плавное появление кнопок по очереди
+    const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+    buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
+  }, 1500);
+}
+setTimeout(showIntroAndMenu, 300);
 
 // ===== Кнопка "Назад" =====
 const backBtn = document.createElement("button");
@@ -48,12 +49,13 @@ backBtn.addEventListener("click", () => {
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
 
-  // Показываем меню
+  // Показываем главное меню
   menu.classList.add("show");
+  menu.querySelector(".intro-text").style.display = "block";
+
   const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
   buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
 
-  // Скрываем кнопку назад
   backBtn.classList.remove("show");
 });
 
@@ -78,6 +80,7 @@ loveBtn.addEventListener("click", () => {
   const nextBtn = document.getElementById("next-btn");
   const heartsContainer = document.getElementById("hearts-container");
 
+  // Кнопка Ещё всегда работает
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
     lovePhrase.textContent = lovePhrases[loveIndex];
@@ -120,7 +123,7 @@ fromMeBtn.addEventListener("click", () => {
   `;
 
   const textEl = document.getElementById("from-me-text");
-  typeText(textEl, fromMeTextContent, 30000); // печатаем 30 секунд
+  typeText(textEl, fromMeTextContent, 30000);
 });
 
 function typeText(element, text, duration) {
@@ -222,7 +225,7 @@ quizBtn.addEventListener("click", () => {
         }, 300);
 
         btn.classList.add("correct");
-        nextBtn.style.display = "block";
+        nextBtn.style.display = "block"; // кнопка Дальше снова видна
       });
 
       optionsEl.appendChild(btn);
