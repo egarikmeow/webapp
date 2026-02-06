@@ -413,7 +413,7 @@ secretBtn.addEventListener("click", () => {
     <div class="secret-title">Секретный режим</div>
     <button class="secret-btn" id="secret-btn">Нажми меня!</button>
     <div class="secret-text" id="secret-text">👆👆👆</div>
-    <div class="bu-text" id="bu-text">БУ!</div>
+    <div class="bu-text" id="bu-text">БУ! Люблю тебя</div>
     <svg class="heart-svg" viewBox="0 0 100 100">
       <path class="heart-path" id="heart-path" d="M50 30 
         C35 0, 0 20, 50 90 
