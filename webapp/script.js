@@ -51,6 +51,7 @@ backBtn.addEventListener("click", () => {
   fromMeContainer.innerHTML = "";
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
   document.querySelectorAll(".info-mode").forEach(el => el.remove());
+  document.querySelectorAll(".feelings-mode").forEach(el => el.remove());
 
   // Показываем меню и intro
   intro.style.display = "block";
@@ -384,6 +385,62 @@ feelingsBtn.addEventListener("click", () => {
       input += val;
       display.textContent = input;
     });
+  });
+});
+
+// ===== Кнопка Секретный режим =====
+const secretBtn = document.createElement("button");
+secretBtn.classList.add("mode-btn");
+secretBtn.textContent = "Секретный ✨";
+menu.appendChild(secretBtn);
+
+secretBtn.addEventListener("click", () => {
+  menu.classList.remove("show");
+  intro.style.display = "none";
+  backBtn.classList.add("show");
+
+  loveContainer.innerHTML = "";
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+  document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
+  document.querySelectorAll(".info-mode").forEach(el => el.remove());
+  document.querySelectorAll(".feelings-mode").forEach(el => el.remove());
+
+  // ===== Создаем разметку секретного режима =====
+  const container = document.createElement("div");
+  container.classList.add("secret-mode");
+  container.innerHTML = `
+    <div class="secret-title">Секретный режим</div>
+    <button class="secret-btn" id="secret-btn">Нажми меня!</button>
+    <div class="secret-text" id="secret-text">Потряси меня 💥</div>
+    <div class="bu-text" id="bu-text">БУ!</div>
+    <svg class="heart-svg" viewBox="0 0 100 100">
+      <path class="heart-path" id="heart-path" d="M50 30 
+        C35 0, 0 20, 50 90 
+        C100 20, 65 0, 50 30" />
+    </svg>
+  `;
+  loveContainer.appendChild(container);
+
+  const secretText = document.getElementById("secret-text");
+  const secretBtnEl = document.getElementById("secret-btn");
+  const buText = document.getElementById("bu-text");
+  const heartPath = document.getElementById("heart-path");
+
+  secretBtnEl.addEventListener("click", () => {
+    // Взрыв текста
+    secretText.classList.add("explode");
+
+    setTimeout(() => {
+      secretText.style.display = "none";
+      buText.classList.add("show");
+
+      // Через 0.8с скрываем "БУ!" и рисуем контур сердца
+      setTimeout(() => {
+        buText.style.display = "none";
+        heartPath.style.strokeDashoffset = 0;
+      }, 800);
+    }, 500);
   });
 });
 
