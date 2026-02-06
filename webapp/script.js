@@ -312,7 +312,7 @@ lotteryBtn.addEventListener("click", () => {
 // ===== Режим "Калькулятор чувств" =====
 const feelingsBtn = document.createElement("button");
 feelingsBtn.classList.add("mode-btn");
-feelingsBtn.textContent = "Калькулятор чувств";
+feelingsBtn.textContent = "Калькулятор";
 menu.appendChild(feelingsBtn);
 
 const compliments = [
