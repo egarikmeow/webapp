@@ -451,7 +451,27 @@ body {
   font-size:20px;
   color:#fff;
   min-height:50px;
-  transition: opacity 0.2s ease; /* плавное исчезновение/появление */
+}
+
+/* Кнопка "Дальше" / "Это всё" в информации */
+#info-next-btn {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: all 0.3s ease;
+  display: inline-block;
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  font-family: 'Farabee', cursive;
+  font-size: 18px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+#info-next-btn:active {
+  transform: scale(0.96);
 }
 
 /* ===== Финальный текст ===== */

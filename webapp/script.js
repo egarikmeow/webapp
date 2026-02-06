@@ -12,16 +12,6 @@ const loveContainer = document.getElementById("love-mode-container");
 const quizContainer = document.getElementById("quiz-mode-container");
 const fromMeContainer = document.getElementById("from-me-container");
 
-// ===== Режим "Почему я тебя люблю" =====
-const lovePhrases = [
-  "Ты делаешь мой мир светлее ✨",
-  "С тобой каждый день — праздник 🎉",
-  "Твоя улыбка — моя радость 😊",
-  "Ты самый дорогой человек для меня 💖",
-  "Каждый момент с тобой бесценен 🌸"
-];
-let loveIndex = 0;
-
 // ===== Стартовый экран =====
 function showMenuWithAnimation() {
   menu.classList.add("show");
@@ -45,22 +35,27 @@ backBtn.textContent = "⬅ Назад";
 document.body.appendChild(backBtn);
 
 backBtn.addEventListener("click", () => {
-  // Убираем все режимы
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
-
-  // Если есть лотерея — удаляем
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
   document.querySelectorAll(".info-mode").forEach(el => el.remove());
 
-  // Показываем меню и intro
   intro.style.display = "block";
   showMenuWithAnimation();
   backBtn.classList.remove("show");
 });
 
 // ===== Почему я тебя люблю =====
+const lovePhrases = [
+  "Ты делаешь мой мир светлее ✨",
+  "С тобой каждый день — праздник 🎉",
+  "Твоя улыбка — моя радость 😊",
+  "Ты самый дорогой человек для меня 💖",
+  "Каждый момент с тобой бесценен 🌸"
+];
+let loveIndex = 0;
+
 loveBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
@@ -85,9 +80,9 @@ loveBtn.addEventListener("click", () => {
 
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
+    lovePhrase.textContent = lovePhrases[loveIndex];
     lovePhrase.classList.remove("animate");
     void lovePhrase.offsetWidth;
-    lovePhrase.textContent = lovePhrases[loveIndex];
     lovePhrase.classList.add("animate");
   });
 
@@ -121,7 +116,6 @@ infoBtn.addEventListener("click", () => {
   intro.style.display = "none";
   backBtn.classList.add("show");
 
-  // Очищаем контейнеры всех режимов
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
@@ -134,12 +128,12 @@ infoBtn.addEventListener("click", () => {
     <div class="info-glass">
       <div class="info-text" id="info-text"></div>
     </div>
-    <button class="mode-btn" id="info-next-btn" style="display:none;">Дальше ➡️</button>
+    <button class="mode-btn" id="info-next-btn">Дальше ➡️</button>
   `;
   document.body.appendChild(container);
 
-  const infoText = container.querySelector("#info-text");
-  const nextBtn = container.querySelector("#info-next-btn");
+  const infoText = document.getElementById("info-text");
+  const nextBtn = document.getElementById("info-next-btn");
 
   const infoLines = [
     "Делая этого бота, я выпил около 40 кружек чая",
@@ -152,51 +146,42 @@ infoBtn.addEventListener("click", () => {
   ];
 
   let currentLine = 0;
-  let typingInterval;
 
   function typeLine(text, callback) {
-    infoText.style.opacity = 0;
-    setTimeout(() => {
-      infoText.textContent = "";
-      infoText.style.opacity = 1;
-      let i = 0;
-      clearInterval(typingInterval);
-      typingInterval = setInterval(() => {
-        infoText.textContent += text[i];
-        i++;
-        if (i >= text.length) {
-          clearInterval(typingInterval);
-          if (callback) callback();
-        }
-      }, 40);
-    }, 200); // плавное исчезновение
+    infoText.textContent = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      infoText.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, 40);
   }
 
-  function showNextLine() {
+  typeLine(infoLines[currentLine], () => {
+    nextBtn.style.display = "inline-block";
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentLine++;
     if (currentLine < infoLines.length) {
       nextBtn.style.display = "none";
       typeLine(infoLines[currentLine], () => {
-        nextBtn.style.display = "block";
         if (currentLine === infoLines.length - 1) {
           nextBtn.textContent = "Это всё ✅";
+          nextBtn.style.display = "inline-block";
         } else {
-          nextBtn.textContent = "Дальше ➡️";
+          nextBtn.style.display = "inline-block";
         }
       });
     } else {
-      // Возврат в главное меню
       container.remove();
       backBtn.classList.remove("show");
       intro.style.display = "block";
       showMenuWithAnimation();
     }
-  }
-
-  showNextLine();
-
-  nextBtn.addEventListener("click", () => {
-    currentLine++;
-    showNextLine();
   });
 });
 
