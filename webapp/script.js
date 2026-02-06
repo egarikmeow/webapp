@@ -133,6 +133,75 @@ function typeText(element, text, duration) {
   }, intervalTime);
 }
 
+// ===== Режим Лотерея =====
+const lotteryBtn = document.getElementById("lottery-btn");
+
+const lotteryPrizes = [
+  "Бесконечные объятия",
+  "Пожизненный запас комплиментов",
+  "Звание 'Самая лучшая'",
+  "Бесконечные объятия",
+  "Пожизненный запас комплиментов",
+  "Звание 'Самая лучшая'"
+];
+
+lotteryBtn.addEventListener("click", () => {
+  menu.classList.remove("show");
+  intro.style.display = "none";
+  backBtn.classList.add("show");
+
+  const segmentCount = lotteryPrizes.length;
+  const angleStep = 360 / segmentCount;
+
+  loveContainer.innerHTML = ""; // очищаем предыдущие режимы
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.classList.add("lottery-mode");
+
+  container.innerHTML = `
+    <div class="lottery-title">Лотерея 🎫</div>
+    <div class="wheel-container">
+      <div class="wheel" id="wheel"></div>
+    </div>
+    <button class="spin-btn" id="spin-btn">Крутить 🎡</button>
+    <div class="lottery-prize" id="lottery-prize"></div>
+  `;
+
+  document.body.appendChild(container);
+
+  const wheel = document.getElementById("wheel");
+  const spinBtn = document.getElementById("spin-btn");
+  const prizeEl = document.getElementById("lottery-prize");
+
+  // создаем сегменты
+  lotteryPrizes.forEach((text, i) => {
+    const seg = document.createElement("div");
+    seg.classList.add("segment");
+    seg.style.transform = `rotate(${i*angleStep}deg) translate(0, -100%)`;
+    seg.textContent = text;
+    wheel.appendChild(seg);
+  });
+
+  setTimeout(() => spinBtn.classList.add("show"), 200); // плавное появление кнопки
+
+  spinBtn.addEventListener("click", () => {
+    spinBtn.disabled = true;
+
+    const rotations = 5; // количество оборотов
+    const prizeIndex = 0; // гарантированный выигрыш
+    const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
+
+    wheel.style.transform = `rotate(${finalAngle}deg)`;
+
+    setTimeout(() => {
+      prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
+      prizeEl.classList.add("show");
+    }, 4000); // совпадает с длительностью анимации
+  });
+});
+
 // ===== Режим Викторина =====
 const quizQuestions = [
   {q:"Я люблю котов?", opts:["Да","Нет","Не знаю"]},
