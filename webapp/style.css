@@ -413,6 +413,46 @@ body {
   100% { transform: translateY(110vh) rotate(360deg); }
 }
 
+/* ===== Режим "Информация" ===== */
+.info-mode {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#00b300;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  z-index:1000;
+}
+
+.info-title {
+  font-family:'TokeelyBrookings', cursive;
+  font-size:32px;
+  color:#fff;
+  margin-bottom: 20px;
+}
+
+.info-glass {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  border-radius:12px;
+  padding:20px 16px;
+  width:80%;
+  max-width:400px;
+  text-align:center;
+}
+
+.info-text {
+  font-family:'TokeelyBrookings', cursive;
+  font-size:20px;
+  color:#fff;
+  min-height:50px;
+}
+
 /* ===== Финальный текст ===== */
 .final-text {
   position: fixed;

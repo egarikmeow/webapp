@@ -108,6 +108,88 @@ function addHeart(container) {
   container.appendChild(heart);
   setTimeout(() => container.removeChild(heart), 5000);
 }
+// ===== Режим "Информация" =====
+const infoBtn = document.createElement("button");
+infoBtn.classList.add("mode-btn");
+infoBtn.textContent = "Информация";
+menu.appendChild(infoBtn);
+
+infoBtn.addEventListener("click", () => {
+  menu.classList.remove("show");
+  intro.style.display = "none";
+  backBtn.classList.add("show");
+
+  // Очищаем контейнеры всех режимов
+  loveContainer.innerHTML = "";
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+  document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
+
+  const container = document.createElement("div");
+  container.classList.add("info-mode");
+  container.innerHTML = `
+    <div class="info-title">Информация</div>
+    <div class="info-glass">
+      <div class="info-text" id="info-text"></div>
+    </div>
+    <button class="mode-btn" id="info-next-btn" style="display:none;">Дальше ➡️</button>
+  `;
+  document.body.appendChild(container);
+
+  const infoText = document.getElementById("info-text");
+  const nextBtn = document.getElementById("info-next-btn");
+
+  const infoLines = [
+    "Делая этого бота, я выпил около 40 кружек чая",
+    "Делая этого бота, я потратил 10 неполных дней",
+    "Делая этого бота, фразу \"да почему нахуй\" я произнёс 200.000 раз",
+    "Делая этого бота, я максимально проверял наличие багов и лагов (если они есть, извини :<)",
+    "Делая этого бота, изначально планировалось вообще не то, что ты видишь",
+    "Делая этого бота, весь проект переворачивался намертво из-за ChatGPT 3 раза",
+    "Делая этого бота, я старался передать твою значимость для меня"
+  ];
+
+  let currentLine = 0;
+
+  function typeLine(text, callback) {
+    infoText.textContent = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      infoText.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, 40); // скорость печати
+  }
+
+  // Начинаем с первой строки
+  typeLine(infoLines[currentLine], () => {
+    nextBtn.style.display = "block";
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentLine++;
+    if (currentLine < infoLines.length) {
+      nextBtn.style.display = "none";
+      typeLine(infoLines[currentLine], () => {
+        if (currentLine === infoLines.length - 1) {
+          nextBtn.textContent = "Это всё ✅";
+          nextBtn.style.display = "block";
+        } else {
+          nextBtn.style.display = "block";
+        }
+      });
+    } else {
+      // Возврат в главное меню
+      container.remove();
+      backBtn.classList.remove("show");
+      intro.style.display = "block";
+      showMenuWithAnimation();
+    }
+  });
+});
 
 // ===== Режим "От меня" =====
 const fromMeTextContent = `Яночка, сегодня 14 февраля, день всех влюбленных, и в этот день я хочу тебе сказать, что я тебя очень сильно люблю и обожаю, ты лучшее что случилось со мной в 2026 году, и я очень рад, что сейчас мы вместе, и хочу, что бы это так было всегда 💘`;
