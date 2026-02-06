@@ -3,6 +3,7 @@ tg.expand();
 
 const intro = document.getElementById("intro");
 const menu = document.getElementById("menu");
+const introText = document.querySelector(".intro-text"); // добавил для "Привет, выбирай"
 const loveBtn = document.getElementById("love-btn");
 const quizBtn = document.getElementById("quiz-btn");
 const fromMeBtn = document.getElementById("from-me-btn");
@@ -21,19 +22,19 @@ const lovePhrases = [
 let loveIndex = 0;
 
 // ===== Стартовый экран =====
+function showMenuWithAnimation() {
+  menu.classList.add("show");
+  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
+  buttons.forEach((btn, i) => {
+    btn.classList.remove("show");
+    setTimeout(() => btn.classList.add("show"), i * 150);
+  });
+}
+
 setTimeout(() => intro.classList.add("show"), 300);
 setTimeout(() => {
   intro.classList.add("hide");
-
-  // Показываем меню
-  menu.classList.add("show");
-
-  // Плавное появление кнопок по очереди (по 2 в ряд, с задержкой)
-  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-  buttons.forEach((btn, i) => {
-    setTimeout(() => btn.classList.add("show"), i * 150);
-  });
-
+  showMenuWithAnimation();
 }, 1800);
 
 // ===== Кнопка "Назад" =====
@@ -48,12 +49,10 @@ backBtn.addEventListener("click", () => {
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
 
-  // Показываем меню
-  menu.classList.add("show");
-  const buttons = Array.from(menu.querySelectorAll(".mode-btn"));
-  buttons.forEach((btn, i) => setTimeout(() => btn.classList.add("show"), i * 150));
+  // Показываем меню и "Привет, выбирай"
+  intro.style.display = "block"; // текст интро видим
+  showMenuWithAnimation();
 
-  // Скрываем кнопку назад
   backBtn.classList.remove("show");
 });
 
