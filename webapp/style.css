@@ -103,6 +103,31 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  padding: 10px 14px;
+  background: rgba(160,160,160,0.6);
+  backdrop-filter: blur(12px);
+  color: white;
+  font-family: 'Farabee', cursive;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+.back-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ===== Режим "Почему я тебя люблю" ===== */
 .love-mode {
   position: fixed;
