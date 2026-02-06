@@ -60,6 +60,7 @@ body {
   align-items: center;
   opacity: 1; /* изначально видимое на всех устройствах */
   transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .menu.show {
