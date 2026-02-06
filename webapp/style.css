@@ -473,6 +473,72 @@ body {
 #info-next-btn:active {
   transform: scale(0.96);
 }
+/* ===== Режим "Калькулятор чувств" ===== */
+.feelings-mode {
+  position: fixed;
+  inset: 0;
+  background: #ffd6e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.feelings-window {
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 20px;
+  width: 300px;
+}
+
+.feelings-title {
+  font-family: 'TokeelyBrookings', cursive;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.feelings-display {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: 'Farabee', cursive;
+  font-size: 20px;
+  text-align: right;
+  min-height: 40px;
+  margin-bottom: 14px;
+}
+
+.feelings-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.feelings-btn {
+  padding: 14px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #ff7fa2;
+  color: white;
+  font-family: 'Farabee', cursive;
+  transition: transform 0.15s ease;
+}
+
+.feelings-btn:active {
+  transform: scale(0.95);
+}
+
+.feelings-btn.equal {
+  background: #ff4f8b;
+}
+
+.feelings-btn.clear {
+  background: #999;
+}
 
 /* ===== Финальный текст ===== */
 .final-text {

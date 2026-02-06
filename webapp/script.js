@@ -308,6 +308,92 @@ lotteryBtn.addEventListener("click", () => {
   }
 });
 
+// ===== Режим "Калькулятор чувств" =====
+const feelingsBtn = document.createElement("button");
+feelingsBtn.classList.add("mode-btn");
+feelingsBtn.textContent = "Калькулятор чувств";
+menu.appendChild(feelingsBtn);
+
+const compliments = [
+  "Ты прекрасна 💖",
+  "Ты — моя радость ✨",
+  "Люблю тебя бесконечно ♾️",
+  "Ты делаешь меня счастливым 😊",
+  "Ты лучшее, что у меня есть 💘",
+  "Ты моё солнышко ☀️",
+  "С тобой мир идеален 🌸"
+];
+
+feelingsBtn.addEventListener("click", () => {
+  menu.classList.remove("show");
+  intro.style.display = "none";
+  backBtn.classList.add("show");
+
+  loveContainer.innerHTML = "";
+  quizContainer.innerHTML = "";
+  fromMeContainer.innerHTML = "";
+  document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
+  document.querySelectorAll(".info-mode").forEach(el => el.remove());
+
+  const container = document.createElement("div");
+  container.classList.add("feelings-mode");
+  container.innerHTML = `
+    <div class="feelings-window">
+      <div class="feelings-title">Калькулятор чувств</div>
+      <div class="feelings-display" id="feelings-display">_</div>
+      <div class="feelings-buttons">
+        <button class="feelings-btn">7</button>
+        <button class="feelings-btn">8</button>
+        <button class="feelings-btn">9</button>
+        <button class="feelings-btn">4</button>
+        <button class="feelings-btn">5</button>
+        <button class="feelings-btn">6</button>
+        <button class="feelings-btn">1</button>
+        <button class="feelings-btn">2</button>
+        <button class="feelings-btn">3</button>
+        <button class="feelings-btn">0</button>
+        <button class="feelings-btn">+</button>
+        <button class="feelings-btn equal">=</button>
+        <button class="feelings-btn clear">C</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(container);
+
+  const display = document.getElementById("feelings-display");
+  let input = "";
+
+  container.querySelectorAll(".feelings-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const val = btn.textContent;
+
+      if (val === "C") {
+        input = "";
+        display.textContent = "_";
+        return;
+      }
+
+      if (val === "=") {
+        const compliment = compliments[Math.floor(Math.random() * compliments.length)];
+        display.textContent = compliment;
+        input = "";
+        return;
+      }
+
+      input += val;
+      display.textContent = input;
+    });
+  });
+
+  // обработка кнопки "Назад"
+  backBtn.onclick = () => {
+    container.remove();
+    backBtn.classList.remove("show");
+    intro.style.display = "block";
+    showMenuWithAnimation();
+  };
+});
+
 // ===== Режим Викторина =====
 const quizQuestions = [
   {q:"Я люблю котов?", opts:["Да","Нет","Не знаю"]},
