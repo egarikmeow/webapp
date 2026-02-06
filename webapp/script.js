@@ -219,7 +219,16 @@ function typeText(element, text, duration) {
   }, intervalTime);
 }
 
-// ===== Режим Лотерея (честная, бесконечная, без 5-секундной блокировки) =====
+// ===== Режим Лотерея (честная) =====
+const lotteryPrizes = [
+  "Бесконечные объятия",
+  "Пожизненный запас комплиментов",
+  "Звание 'Самая лучшая'",
+  "Сюрприз 🎁",
+  "Подарок 🍫",
+  "Обнимашки 🤗"
+];
+
 lotteryBtn.addEventListener("click", () => {
   menu.classList.remove("show");
   intro.style.display = "none";
@@ -249,7 +258,6 @@ lotteryBtn.addEventListener("click", () => {
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
 
-  wheel.innerHTML = "";
   lotteryPrizes.forEach((text, i) => {
     const seg = document.createElement("div");
     seg.classList.add("segment");
@@ -258,14 +266,13 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
-  createFlowers(30, flowersContainer);
-
-  // Показываем кнопку "Назад" сразу
-  backBtn.classList.add("show");
+  setTimeout(() => spinBtn.classList.add("show"), 200);
 
   spinBtn.addEventListener("click", () => {
-    const rotations = 5;
-    const prizeIndex = Math.floor(Math.random() * lotteryPrizes.length);
+    spinBtn.disabled = true;
+
+    const rotations = 5; 
+    const prizeIndex = Math.floor(Math.random() * lotteryPrizes.length); // честная лотерея
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
 
     wheel.style.transform = `rotate(${finalAngle}deg)`;
@@ -273,8 +280,16 @@ lotteryBtn.addEventListener("click", () => {
     setTimeout(() => {
       prizeEl.textContent = `Поздравляю! Ты выиграла: ${lotteryPrizes[prizeIndex]} 🎉`;
       prizeEl.classList.add("show");
+
+      // Появление кнопки "Назад" под текстом
+      backBtn.style.top = (prizeEl.offsetTop + prizeEl.offsetHeight + 20) + "px";
+      backBtn.style.left = "50%";
+      backBtn.style.transform = "translateX(-50%)";
+      backBtn.classList.add("show");
     }, 4000);
   });
+
+  createFlowers(30, flowersContainer);
 
   function createFlowers(count, container) {
     for (let i = 0; i < count; i++) addFlower(container);
