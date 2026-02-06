@@ -466,7 +466,7 @@ secretBtn.addEventListener("click", () => {
 // ===== Кнопка "Люблю в тебе" =====
 const luckBtnMenu = document.createElement("button");
 luckBtnMenu.classList.add("mode-btn");
-luckBtnMenu.textContent = "Люблю в тебе..💙";
+luckBtnMenu.textContent = "Люблю..💙";
 menu.appendChild(luckBtnMenu);
 
 const herQualities = [
