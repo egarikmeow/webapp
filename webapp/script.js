@@ -1,0 +1,223 @@
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+const intro = document.getElementById("intro");
+const menu = document.getElementById("menu");
+const loveBtn = document.getElementById("love-btn");
+const quizBtn = document.getElementById("quiz-btn");
+const loveContainer = document.getElementById("love-mode-container");
+const quizContainer = document.getElementById("quiz-mode-container");
+const fromMeBtn = document.getElementById("from-me-btn");
+const fromMeContainer = document.getElementById("from-me-container");
+
+// ===== Режим "Почему я тебя люблю" =====
+const lovePhrases = [
+  "Ты делаешь мой мир светлее ✨",
+  "С тобой каждый день — праздник 🎉",
+  "Твоя улыбка — моя радость 😊",
+  "Ты самый дорогой человек для меня 💖",
+  "Каждый момент с тобой бесценен 🌸"
+];
+let loveIndex = 0;
+
+// ===== Стартовый экран =====
+setTimeout(() => intro.classList.add("show"), 300);
+setTimeout(() => {
+  intro.classList.add("hide");
+  menu.classList.remove("hidden");
+}, 1800);
+
+// ===== Почему я тебя люблю =====
+loveBtn.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  intro.style.display = "none";
+
+  loveContainer.innerHTML = `
+    <div class="love-mode">
+      <div class="love-main">
+        <div class="love-title">Я тебя люблю, потому что</div> 
+        <div class="love-phrase animate" id="love-phrase">${lovePhrases[loveIndex]}</div>
+        <button class="mode-btn" id="next-btn">Ещё ❤️</button>
+      </div>
+      <div id="hearts-container"></div>
+    </div>
+  `;
+
+  const lovePhrase = document.getElementById("love-phrase");
+  const nextBtn = document.getElementById("next-btn");
+  const heartsContainer = document.getElementById("hearts-container");
+
+  nextBtn.addEventListener("click", () => {
+    loveIndex = (loveIndex + 1) % lovePhrases.length;
+    lovePhrase.textContent = lovePhrases[loveIndex];
+    lovePhrase.classList.remove("animate");
+    void lovePhrase.offsetWidth;
+    lovePhrase.classList.add("animate");
+  });
+
+  createHearts(30, heartsContainer);
+});
+
+function createHearts(count, container) {
+  for (let i = 0; i < count; i++) addHeart(container);
+  setInterval(() => addHeart(container), 500);
+}
+function addHeart(container) {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.textContent = "❤️";
+  heart.style.left = Math.random() * 100 + "%";
+  heart.style.fontSize = 14 + Math.random() * 14 + "px";
+  heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+  heart.style.opacity = 0.5 + Math.random() * 0.5;
+  container.appendChild(heart);
+  setTimeout(() => container.removeChild(heart), 5000);
+}
+
+// ===== Режим "От меня" =====
+const fromMeTextContent = `Яночка, сегодня 14 февраля, день всех влюбленных, и в этот день я хочу тебе сказать, что я тебя очень сильно люблю и обожаю, ты лучшее что случилось со мной в 2026 году, и я очень рад, что сейчас мы вместе, и хочу, что бы это так было всегда 💘`;
+
+fromMeBtn.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  intro.style.display = "none";
+
+  fromMeContainer.innerHTML = `
+    <div class="from-me-mode">
+      <div class="from-me-text" id="from-me-text"></div>
+    </div>
+  `;
+
+  const textEl = document.getElementById("from-me-text");
+  typeText(textEl, fromMeTextContent, 30000); // печатаем 30 секунд
+});
+
+function typeText(element, text, duration) {
+  element.style.opacity = 1;
+  const totalChars = text.length;
+  let current = 0;
+  const intervalTime = duration / totalChars;
+
+  const interval = setInterval(() => {
+    element.textContent += text[current];
+    current++;
+    if (current >= totalChars) clearInterval(interval);
+  }, intervalTime);
+}
+
+// ===== Режим Викторина =====
+const quizQuestions = [
+  {q:"Я люблю котов?", opts:["Да","Нет","Не знаю"]},
+  {q:"Что мне больше приглядывается по душе?", opts:["Кино","Театр","Ничего"]},
+  {q:"Что мне больше приглядывается по душе?", opts:["Вода","Кола","Чай"]},
+  {q:"Что мне больше приглядывается по душе?", opts:["Кошка","Собака","Попугай"]},
+  {q:"Что бы я выбрал?", opts:["Юрист","Менеджер","IT"]},
+  {q:"Что мне больше приглядывается по душе?", opts:["Гулянки","Сидеть дома","В гости"]},
+  {q:"Что мне больше приглядывается по душе?", opts:["Любить","Быть любимой","Затрудняюсь"]}
+];
+const praises = ["Да!","Верно)","Я также ответил","Именно!","Умница!"];
+let quizIndex = 0;
+
+quizBtn.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  intro.style.display = "none";
+
+  quizContainer.innerHTML = `
+    <div class="quiz-mode">
+      <div id="roses-container"></div>
+      <div class="quiz-window">
+        <div class="quiz-question" id="quiz-question"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <button class="mode-btn" id="next-quiz-btn">Дальше ➡️</button>
+      </div>
+    </div>
+  `;
+
+  const questionEl = document.getElementById("quiz-question");
+  const optionsEl = document.getElementById("quiz-options");
+  const nextBtn = document.getElementById("next-quiz-btn");
+  const rosesContainer = document.getElementById("roses-container");
+
+  quizIndex = 0;
+  nextBtn.style.display = "none";
+  showQuestion();
+
+  nextBtn.addEventListener("click", () => {
+    quizIndex++;
+    if (quizIndex >= quizQuestions.length) {
+      showFinalText();
+    } else {
+      showQuestion();
+      nextBtn.style.display = "none";
+    }
+  });
+
+  createRoses(30, rosesContainer);
+
+  function showQuestion() {
+    const q = quizQuestions[quizIndex];
+    questionEl.textContent = q.q;
+    questionEl.style.filter = "blur(6px)";
+    questionEl.style.opacity = 0;
+    optionsEl.innerHTML = "";
+
+    setTimeout(() => {
+      questionEl.style.transition = "all 0.6s ease";
+      questionEl.style.filter = "blur(0)";
+      questionEl.style.opacity = 1;
+    }, 50);
+
+    q.opts.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.classList.add("quiz-option");
+
+      btn.addEventListener("click", () => {
+        const praise = praises[Math.floor(Math.random() * praises.length)];
+
+        questionEl.style.filter = "blur(6px)";
+        questionEl.style.opacity = 0;
+
+        setTimeout(() => {
+          questionEl.textContent = praise;
+          questionEl.style.filter = "blur(6px)";
+          questionEl.style.opacity = 0;
+          setTimeout(() => {
+            questionEl.style.transition = "all 0.6s ease";
+            questionEl.style.filter = "blur(0)";
+            questionEl.style.opacity = 1;
+          }, 50);
+        }, 300);
+
+        btn.classList.add("correct");
+        nextBtn.style.display = "block";
+      });
+
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function createRoses(count, container) {
+    for (let i = 0; i < count; i++) addRose(container);
+    setInterval(() => addRose(container), 600);
+  }
+
+  function addRose(container) {
+    const rose = document.createElement("div");
+    rose.classList.add("rose");
+    rose.textContent = "🌹";
+    rose.style.left = Math.random() * 100 + "%";
+    rose.style.fontSize = 14 + Math.random() * 14 + "px";
+    rose.style.animationDuration = 3 + Math.random() * 2 + "s";
+    rose.style.opacity = 0.5 + Math.random() * 0.5;
+    container.appendChild(rose);
+    setTimeout(() => container.removeChild(rose), 5000);
+  }
+
+  function showFinalText() {
+    quizContainer.innerHTML = `
+      <div class="quiz-mode">
+        <div class="final-text">Молодец! Ты знаешь меня на все 100%. Это ли не прекрасно, солнце?)</div>
+      </div>
+    `;
+  }
+});

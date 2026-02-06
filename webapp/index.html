@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Стартовая надпись -->
+<div id="intro" class="intro">
+  <div class="intro-text">Привет! Выбирай)</div>
+</div>
+
+<!-- Меню режимов -->
+<div id="menu" class="menu hidden">
+  <button id="love-btn" class="mode-btn">💖 Почему я тебя люблю</button>
+  <button id="quiz-btn" class="mode-btn">🌹 Викторина</button>
+  <button id="from-me-btn" class="mode-btn">💌 От меня</button> <!-- новая кнопка -->
+</div>
+
+<!-- Контейнеры для режимов -->
+<div id="love-mode-container"></div>
+<div id="quiz-mode-container"></div>
+<div id="from-me-container"></div> <!-- новый контейнер -->
+
+<script src="script.js"></script>
+</body>
+</html>
