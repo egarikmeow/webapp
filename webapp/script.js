@@ -463,10 +463,10 @@ secretBtn.addEventListener("click", () => {
   });
 });
 
-// ===== Кнопка "Случ" =====
+// ===== Кнопка "Люблю в тебе" =====
 const luckBtnMenu = document.createElement("button");
 luckBtnMenu.classList.add("mode-btn");
-luckBtnMenu.textContent = "Случ 💙";
+luckBtnMenu.textContent = "Люблю в тебе..💙";
 menu.appendChild(luckBtnMenu);
 
 const herQualities = [
