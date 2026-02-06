@@ -52,6 +52,7 @@ backBtn.addEventListener("click", () => {
 
   // Если есть лотерея — удаляем
   document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
+  document.querySelectorAll(".info-mode").forEach(el => el.remove());
 
   // Показываем меню и intro
   intro.style.display = "block";
@@ -84,9 +85,9 @@ loveBtn.addEventListener("click", () => {
 
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
-    lovePhrase.textContent = lovePhrases[loveIndex];
     lovePhrase.classList.remove("animate");
     void lovePhrase.offsetWidth;
+    lovePhrase.textContent = lovePhrases[loveIndex];
     lovePhrase.classList.add("animate");
   });
 
@@ -108,6 +109,7 @@ function addHeart(container) {
   container.appendChild(heart);
   setTimeout(() => container.removeChild(heart), 5000);
 }
+
 // ===== Режим "Информация" =====
 const infoBtn = document.createElement("button");
 infoBtn.classList.add("mode-btn");
@@ -136,8 +138,8 @@ infoBtn.addEventListener("click", () => {
   `;
   document.body.appendChild(container);
 
-  const infoText = document.getElementById("info-text");
-  const nextBtn = document.getElementById("info-next-btn");
+  const infoText = container.querySelector("#info-text");
+  const nextBtn = container.querySelector("#info-next-btn");
 
   const infoLines = [
     "Делая этого бота, я выпил около 40 кружек чая",
@@ -150,35 +152,35 @@ infoBtn.addEventListener("click", () => {
   ];
 
   let currentLine = 0;
+  let typingInterval;
 
   function typeLine(text, callback) {
-    infoText.textContent = "";
-    let i = 0;
-    const interval = setInterval(() => {
-      infoText.textContent += text[i];
-      i++;
-      if (i >= text.length) {
-        clearInterval(interval);
-        if (callback) callback();
-      }
-    }, 40); // скорость печати
+    infoText.style.opacity = 0;
+    setTimeout(() => {
+      infoText.textContent = "";
+      infoText.style.opacity = 1;
+      let i = 0;
+      clearInterval(typingInterval);
+      typingInterval = setInterval(() => {
+        infoText.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(typingInterval);
+          if (callback) callback();
+        }
+      }, 40);
+    }, 200); // плавное исчезновение
   }
 
-  // Начинаем с первой строки
-  typeLine(infoLines[currentLine], () => {
-    nextBtn.style.display = "block";
-  });
-
-  nextBtn.addEventListener("click", () => {
-    currentLine++;
+  function showNextLine() {
     if (currentLine < infoLines.length) {
       nextBtn.style.display = "none";
       typeLine(infoLines[currentLine], () => {
+        nextBtn.style.display = "block";
         if (currentLine === infoLines.length - 1) {
           nextBtn.textContent = "Это всё ✅";
-          nextBtn.style.display = "block";
         } else {
-          nextBtn.style.display = "block";
+          nextBtn.textContent = "Дальше ➡️";
         }
       });
     } else {
@@ -188,6 +190,13 @@ infoBtn.addEventListener("click", () => {
       intro.style.display = "block";
       showMenuWithAnimation();
     }
+  }
+
+  showNextLine();
+
+  nextBtn.addEventListener("click", () => {
+    currentLine++;
+    showNextLine();
   });
 });
 
