@@ -7,6 +7,7 @@ const introText = document.querySelector(".intro-text");
 const loveBtn = document.getElementById("love-btn");
 const quizBtn = document.getElementById("quiz-btn");
 const fromMeBtn = document.getElementById("from-me-btn");
+const lotteryBtn = document.getElementById("lottery-btn");
 const loveContainer = document.getElementById("love-mode-container");
 const quizContainer = document.getElementById("quiz-mode-container");
 const fromMeContainer = document.getElementById("from-me-container");
@@ -47,6 +48,7 @@ backBtn.addEventListener("click", () => {
   loveContainer.innerHTML = "";
   quizContainer.innerHTML = "";
   fromMeContainer.innerHTML = "";
+  document.querySelectorAll(".lottery-mode").forEach(el => el.remove());
   intro.style.display = "block";
   showMenuWithAnimation();
   backBtn.classList.remove("show");
@@ -73,7 +75,7 @@ loveBtn.addEventListener("click", () => {
   const nextBtn = document.getElementById("next-btn");
   const heartsContainer = document.getElementById("hearts-container");
 
-  setTimeout(() => nextBtn.classList.add("show"), 200); // плавное появление кнопки "Ещё"
+  setTimeout(() => nextBtn.classList.add("show"), 200);
 
   nextBtn.addEventListener("click", () => {
     loveIndex = (loveIndex + 1) % lovePhrases.length;
@@ -134,8 +136,6 @@ function typeText(element, text, duration) {
 }
 
 // ===== Режим Лотерея =====
-const lotteryBtn = document.getElementById("lottery-btn");
-
 const lotteryPrizes = [
   "Бесконечные объятия",
   "Пожизненный запас комплиментов",
@@ -172,9 +172,9 @@ lotteryBtn.addEventListener("click", () => {
   const spinBtn = document.getElementById("spin-btn");
   const prizeEl = document.getElementById("lottery-prize");
 
-  // создаем сегменты
   const segmentCount = lotteryPrizes.length;
   const angleStep = 360 / segmentCount;
+
   lotteryPrizes.forEach((text, i) => {
     const seg = document.createElement("div");
     seg.classList.add("segment");
@@ -183,17 +183,13 @@ lotteryBtn.addEventListener("click", () => {
     wheel.appendChild(seg);
   });
 
-  // плавное появление кнопки
   setTimeout(() => spinBtn.classList.add("show"), 200);
 
-  // привязка клика к кнопке
   spinBtn.addEventListener("click", () => {
     spinBtn.disabled = true;
-
-    const rotations = 5; // обороты
+    const rotations = 5;
     const prizeIndex = 0; // всегда выигрыш
     const finalAngle = 360*rotations + prizeIndex*angleStep + angleStep/2;
-
     wheel.style.transform = `rotate(${finalAngle}deg)`;
 
     setTimeout(() => {
@@ -271,7 +267,7 @@ quizBtn.addEventListener("click", () => {
       btn.textContent = opt;
       btn.classList.add("quiz-option");
 
-      setTimeout(() => btn.classList.add("show"), i * 150); // плавное появление кнопок
+      setTimeout(() => btn.classList.add("show"), i * 150);
 
       btn.addEventListener("click", () => {
         const praise = praises[Math.floor(Math.random() * praises.length)];
@@ -291,7 +287,7 @@ quizBtn.addEventListener("click", () => {
         }, 300);
 
         btn.classList.add("correct");
-        setTimeout(() => nextBtn.classList.add("show"), 50); // плавно показать кнопку "Дальше"
+        setTimeout(() => nextBtn.classList.add("show"), 50);
       });
 
       optionsEl.appendChild(btn);
