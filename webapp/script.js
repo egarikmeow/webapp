@@ -391,7 +391,7 @@ feelingsBtn.addEventListener("click", () => {
 // ===== Кнопка Секретный режим =====
 const secretBtn = document.createElement("button");
 secretBtn.classList.add("mode-btn");
-secretBtn.textContent = "Секретный ✨";
+secretBtn.textContent = "Секрет ✨";
 menu.appendChild(secretBtn);
 
 secretBtn.addEventListener("click", () => {
@@ -412,7 +412,7 @@ secretBtn.addEventListener("click", () => {
   container.innerHTML = `
     <div class="secret-title">Секретный режим</div>
     <button class="secret-btn" id="secret-btn">Нажми меня!</button>
-    <div class="secret-text" id="secret-text">Потряси меня 💥</div>
+    <div class="secret-text" id="secret-text">👆👆👆</div>
     <div class="bu-text" id="bu-text">БУ!</div>
     <svg class="heart-svg" viewBox="0 0 100 100">
       <path class="heart-path" id="heart-path" d="M50 30 

@@ -14,7 +14,7 @@ async def start(message: Message):
     kb = InlineKeyboardBuilder()
     kb.button(
         text="💖 Почему я тебя люблю",
-        web_app=WebAppInfo(url="https://egarikmeow.github.io/webapp/webapp/?v=5")
+        web_app=WebAppInfo(url="https://egarikmeow.github.io/webapp/webapp/?v=6")
     )
 
     await message.answer(
