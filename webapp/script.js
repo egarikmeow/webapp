@@ -639,7 +639,7 @@ quizBtn.addEventListener("click", () => {
   function showFinalText() {
     quizContainer.innerHTML = `
       <div class="quiz-mode">
-        <div class="final-text">Молодец! Ты знаешь меня на все 100%. Это ли не прекрасно, солнце?)</div>
+        <div class="final-text">Вопрос: зачем я сделал викторину? Что бы сказать тебе, что ты - молодец! Ты знаешь меня на все 100%. Это ли не прекрасно, солнце?)</div>
       </div>
     `;
   }
